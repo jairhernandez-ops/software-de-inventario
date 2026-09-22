@@ -2,6 +2,7 @@ package dao;
 
 import conexion.Conexion;
 import modelo.Producto;
+import validador.ProductoValidator;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +13,11 @@ import java.util.List;
 public class ProductoDAO {
 
     public boolean insertar(Producto p) {
+        // Antes de tocar la base de datos, reviso que el producto tenga datos válidos
+        if (!ProductoValidator.esValido(p)) {
+            System.out.println("Producto inválido: no se realizó la inserción (nombre vacío, precio <= 0 o usuario inválido)");
+            return false;
+        }
         String sql = "INSERT INTO Productos (nombre_producto, precio, usuarios_id_usuario) VALUES (?, ?, ?)";
         try (Connection conn = Conexion.conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
