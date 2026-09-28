@@ -54,4 +54,30 @@ class ProductoValidatorTest {
         Producto p = new Producto("Monitor 24 pulgadas", 500000, 0);
         assertFalse(ProductoValidator.esValido(p), "Un producto sin usuario_id válido no debería ser aceptado");
     }
+
+    // ---- Pruebas nuevas de la cantidad ----
+
+    // Un producto con cantidad positiva y todo lo demás bien debería pasar
+    @Test
+    @DisplayName("Un producto con cantidad positiva debe ser válido")
+    void cantidadPositivaDebeAprobar() {
+        Producto p = new Producto("Teclado mecánico", 150000, 25, 1);
+        assertTrue(ProductoValidator.esValido(p), "Un producto con cantidad positiva debería pasar la validación");
+    }
+
+    // Cantidad en 0 sí se permite: significa que el producto está agotado en bodega
+    @Test
+    @DisplayName("Un producto con cantidad en cero (agotado) debe ser válido")
+    void cantidadCeroDebeAprobar() {
+        Producto p = new Producto("Mouse inalámbrico", 50000, 0, 1);
+        assertTrue(ProductoValidator.esValido(p), "Una cantidad de 0 debería aceptarse porque el producto puede estar agotado");
+    }
+
+    // Una cantidad negativa no tiene sentido en un inventario
+    @Test
+    @DisplayName("Un producto con cantidad negativa debe ser rechazado")
+    void cantidadNegativaDebeRechazar() {
+        Producto p = new Producto("Mouse inalámbrico", 50000, -3, 1);
+        assertFalse(ProductoValidator.esValido(p), "Una cantidad negativa no debería ser aceptada");
+    }
 }

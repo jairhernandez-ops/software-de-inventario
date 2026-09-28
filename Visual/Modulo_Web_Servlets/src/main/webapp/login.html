@@ -8,11 +8,22 @@
 <body class="body-login">
     <div class="login-box">
         <h2>Iniciar Sesión</h2>
+        <p id="mensajeError" style="color:#c00000; display:none; margin-top:-10px; margin-bottom:10px;">
+            Usuario o contraseña incorrectos.
+        </p>
         <form action="AuthServlet" method="POST">
             <input type="text" id="usuario" name="usuario" placeholder="Usuario" required>
             <input type="password" id="password" name="password" placeholder="Contraseña" required>
             <button type="submit">Ingresar</button>
         </form>
     </div>
+    <script>
+        // Si la URL trae ?error=1 (AuthServlet redirige así cuando las credenciales son incorrectas),
+        // se muestra el mensaje de error al usuario.
+        const parametros = new URLSearchParams(window.location.search);
+        if (parametros.get("error") === "1") {
+            document.getElementById("mensajeError").style.display = "block";
+        }
+    </script>
 </body>
 </html>
