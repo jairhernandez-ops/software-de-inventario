@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Productos` (
   `id_producto` INT NOT NULL AUTO_INCREMENT,
   `nombre_producto` VARCHAR(45) NOT NULL,
   `precio` DECIMAL(10,2) NOT NULL,
+  `cantidad` INT NOT NULL DEFAULT 0,
   `id_usuario` INT NOT NULL,
   `usuarios_id_usuario` INT NOT NULL,
   PRIMARY KEY (`id_producto`),
